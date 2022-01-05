@@ -28,10 +28,10 @@ async function save(User) {
     let result = (await sql.query(`select * from Users where User_Id = ${User.User_Id}`)).recordsets[0].length > 0
     if (result) {
         return (await sql.query(`UPDATE [dbo].[Users]
-   SET [First_Name] = ${User.First_Name}
-      ,[Last_Name] = ${User.Last_Name}
+   SET [First_Name] = '${User.First_Name}'
+      ,[Last_Name] = '${User.Last_Name}'
       ,[SSN] = ${User.SSN}
-      ,[Email] = ${User.Email}
+      ,[Email] = '${User.Email}'
       ,[Balance] = ${User.Balance}
       ,[Phone_Home] = ${User.Phone_Home}
       ,[Phone_Mobile] = ${User.Phone_Mobile}
@@ -60,10 +60,10 @@ INSERT INTO [dbo].[Users]
            OUTPUT Inserted.User_Id
      VALUES
            (
-            ${User.First_Name},
-            ${User.Last_Name},
-            ${User.SSN},
-            ${User.Email},
+            '${User.First_Name}',
+            '${User.Last_Name}',
+            '${User.SSN}',
+            '${User.Email}',
             ${User.Balance},
             ${User.Phone_Home},
             ${User.Phone_Mobile},

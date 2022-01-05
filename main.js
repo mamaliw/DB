@@ -2,6 +2,8 @@ require('dotenv').config();
 const db = require('./DB');
 const DAO = require('./DAO');
 
+const User = require('./Model/User');
+
 (async function () {
     global.sql = await db.connect()
     // console.log(await DAO.BusReservationDAO.findAll())
@@ -18,5 +20,7 @@ const DAO = require('./DAO');
     // console.log(await DAO.RoomOptionDAO.findAll())
     // console.log(await DAO.RoomReservationDAO.findAll())
     // console.log(await DAO.TransactionDAO.findAll())
-    console.log(await DAO.UserDAO.findAll())
+    // console.log(await DAO.UserDAO.findByIds([5,6,7]))
+    const user = new User(31,'MohammadReza','Asgari','0023998611','mr.asgari8015@gmail.com',999999999,88996655,'09906768372',1,'2000-01-01',null,null,null,null)
+    console.log(await DAO.UserDAO.save(user))
 }())
