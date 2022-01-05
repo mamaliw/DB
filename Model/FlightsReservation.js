@@ -1,4 +1,4 @@
-class FlightsReservations {
+class FlightsReservation {
     constructor(Reservation_Id,Flight_Number,User_Id,Gender,Passenger_Age_Class,Passenger_First_Name,Passenger_Last_Name,Passenger_SSN,Passenger_Birthdate,Passenger_Birth_Country,Passport_Number,Passport_Issue_Country,Passport_Expire_Date) {
         this.Reservation_Id = Reservation_Id
         this.Flight_Number = Flight_Number
@@ -15,4 +15,4 @@ class FlightsReservations {
         this.Passport_Expire_Date = Passport_Expire_Date
     }
 }
-module.exports = FlightsReservations
+module.exports = FlightsReservation

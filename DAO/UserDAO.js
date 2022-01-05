@@ -1,24 +1,24 @@
 const User = require('../Model/User')
 const db = require('../DB')
 
-async function findById(UserId) {
-    return (await sql.query(`select * from Users where User_Id = ${UserId}`)).recordsets[0][0]
+async function findById(User_Id) {
+    return (await sql.query(`select * from Users where User_Id = ${User_Id}`)).recordsets[0][0]
 }
 
-async function findByIds(UserIds) {
-    return (await sql.query(`select * from Users where User_Id in (${UserIds})`)).recordsets[0]
+async function findByIds(User_Ids) {
+    return (await sql.query(`select * from Users where User_Id in (${User_Ids})`)).recordsets[0]
 }
 
 async function findAll() {
     return (await sql.query(`select * from Users`)).recordsets[0]
 }
 
-async function deleteById(UserId) {
-    return (await sql.query(`delete from Users where User_Id = {User_Id}`)).rowsAffected[0] > 0
+async function deleteById(User_Id) {
+    return (await sql.query(`delete from Users where User_Id = ${User_Id}`)).rowsAffected[0] > 0
 }
 
-async function deleteByIds(UserIds) {
-    return (await sql.query(`delete from Users where User_Id in (${UserIds})`)).rowsAffected[0] >= UserIds.length
+async function deleteByIds(User_Ids) {
+    return (await sql.query(`delete from Users where User_Id in (${User_Ids})`)).rowsAffected[0] >= User_Ids.length
 }
 
 async function save(User) {

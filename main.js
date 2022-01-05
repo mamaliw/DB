@@ -1,5 +1,6 @@
 require('dotenv').config();
 const db = require('./DB');
+const User = require('./Model/User')
 const userDao = require('./DAO/UserDAO');
 
 // async function main () {
@@ -27,6 +28,7 @@ const userDao = require('./DAO/UserDAO');
 
 (async function () {
     global.sql = await db.connect()
-    const result = await userDao.findAll()
+    const user = new User(25,9999,55,55,55,55,55,55,1,'2020-01-01',55,55,55,'2000-01-01')
+    const result = await userDao.save(user)
     console.log(result)
 }())
