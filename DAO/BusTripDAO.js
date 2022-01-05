@@ -1,33 +1,33 @@
 const BusTrip = require('../Model/BusTrip')
 const db = require('../DB')
 
-async function findById(BusTrip_Id) {
-    return (await sql.query(`select * from BusTrips where BusTrip_Id = ${BusTrip_Id}`)).recordsets[0][0]
+async function findById(Bus_Trip_Id) {
+    return (await sql.query(`select * from Bus_Trip where Bus_Trip_Id = ${Bus_Trip_Id}`)).recordsets[0][0]
 }
 
-async function findByIds(BusTrip_Ids) {
-    return (await sql.query(`select * from BusTrips where BusTrip_Id in (${BusTrip_Ids})`)).recordsets[0]
+async function findByIds(Bus_Trip_Ids) {
+    return (await sql.query(`select * from Bus_Trip where Bus_Trip_Id in (${Bus_Trip_Ids})`)).recordsets[0]
 }
 
 async function findAll() {
-    return (await sql.query(`select * from BusTrips`)).recordsets[0]
+    return (await sql.query(`select * from Bus_Trip`)).recordsets[0]
 }
 
-async function deleteById(BusTrip_Id) {
-    return (await sql.query(`delete from BusTrips where BusTrip_Id = ${BusTrip_Id}`)).rowsAffected[0] > 0
+async function deleteById(Bus_Trip_Id) {
+    return (await sql.query(`delete from Bus_Trip where Bus_Trip_Id = ${Bus_Trip_Id}`)).rowsAffected[0] > 0
 }
 
-async function deleteByIds(BusTrip_Ids) {
-    return (await sql.query(`delete from BusTrips where BusTrip_Id in (${BusTrip_Ids})`)).rowsAffected[0] >= BusTrip_Ids.length
+async function deleteByIds(Bus_Trip_Ids) {
+    return (await sql.query(`delete from Bus_Trip where Bus_Trip_Id in (${Bus_Trip_Ids})`)).rowsAffected[0] >= Bus_Trip_Ids.length
 }
 
 async function save(BusTrip) {
     if (!BusTrip){
         throw new Error('Bad BusTrip')
     }
-    let result = (await sql.query(`select * from BusTrips where BusTrip_Id = ${BusTrip.BusTrip_Id}`)).recordsets[0].length > 0
+    let result = (await sql.query(`select * from Bus_Trip where Bus_Trip_Id = ${BusTrip.Bus_Trip_Id}`)).recordsets[0].length > 0
     if (result) {
-        return (await sql.query(`UPDATE [dbo].[BusTrips]
+        return (await sql.query(`UPDATE [dbo].[Bus_Trip]
    SET [Trip_Number] = ${BusTrip.Trip_Number}
       ,[Origin_City] = ${BusTrip.Origin_City}
       ,[Origin_Terminal] = ${BusTrip.Origin_Terminal}
@@ -38,10 +38,10 @@ async function save(BusTrip) {
       ,[Price] = ${BusTrip.Price}
       ,[Bus_Type] = ${BusTrip.Bus_Type}
       ,[Capacity] = ${BusTrip.Capacity}
- WHERE  BusTrip_Id = ${BusTrip.BusTrip_Id}`))
+ WHERE  Bus_Trip_Id = ${BusTrip.Bus_Trip_Id}`))
     }
     return (await sql.query(`
-INSERT INTO [dbo].[BusTrips]
+INSERT INTO [dbo].[Bus_Trip]
            ([Trip_Number]
            ,[Origin_City]
            ,[Origin_Terminal]
@@ -52,7 +52,7 @@ INSERT INTO [dbo].[BusTrips]
            ,[Price]
            ,[Bus_Type]
            ,[Capacity])
-           OUTPUT Inserted.BusTrip_Id
+           OUTPUT Inserted.Bus_Trip_Id
      VALUES
            (
             ${BusTrip.Trip_Number},

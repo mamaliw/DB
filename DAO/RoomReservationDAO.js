@@ -2,32 +2,32 @@ const RoomReservation = require('../Model/RoomReservation')
 const db = require('../DB')
 
 async function findById(Reservation_Id) {
-    return (await sql.query(`select * from RoomReservations where Reservation_Id = ${Reservation_Id}`)).recordsets[0][0]
+    return (await sql.query(`select * from Room_Reservations where Reservation_Id = ${Reservation_Id}`)).recordsets[0][0]
 }
 
 async function findByIds(Reservation_Ids) {
-    return (await sql.query(`select * from RoomReservations where Reservation_Id in (${Reservation_Ids})`)).recordsets[0]
+    return (await sql.query(`select * from Room_Reservations where Reservation_Id in (${Reservation_Ids})`)).recordsets[0]
 }
 
 async function findAll() {
-    return (await sql.query(`select * from RoomReservations`)).recordsets[0]
+    return (await sql.query(`select * from Room_Reservations`)).recordsets[0]
 }
 
 async function deleteById(Reservation_Id) {
-    return (await sql.query(`delete from RoomReservations where Reservation_Id = ${Reservation_Id}`)).rowsAffected[0] > 0
+    return (await sql.query(`delete from Room_Reservations where Reservation_Id = ${Reservation_Id}`)).rowsAffected[0] > 0
 }
 
 async function deleteByIds(Reservation_Ids) {
-    return (await sql.query(`delete from RoomReservations where Reservation_Id in (${Reservation_Ids})`)).rowsAffected[0] >= Reservation_Ids.length
+    return (await sql.query(`delete from Room_Reservations where Reservation_Id in (${Reservation_Ids})`)).rowsAffected[0] >= Reservation_Ids.length
 }
 
 async function save(RoomReservation) {
     if (!RoomReservation){
         throw new Error('Bad RoomReservation')
     }
-    let result = (await sql.query(`select * from RoomReservations where Reservation_Id = ${RoomReservation.Reservation_Id}`)).recordsets[0].length > 0
+    let result = (await sql.query(`select * from Room_Reservations where Reservation_Id = ${RoomReservation.Reservation_Id}`)).recordsets[0].length > 0
     if (result) {
-        return (await sql.query(`UPDATE [dbo].[RoomReservations]
+        return (await sql.query(`UPDATE [dbo].[Room_Reservations]
    SET [Room_Id] = ${RoomReservation.Room_Id}
       ,[User_Id] = ${RoomReservation.User_Id}
       ,[Passenger_First_Name] = ${RoomReservation.Passenger_First_Name}
@@ -42,7 +42,7 @@ async function save(RoomReservation) {
  WHERE  Reservation_Id = ${RoomReservation.Reservation_Id}`))
     }
     return (await sql.query(`
-INSERT INTO [dbo].[RoomReservations]
+INSERT INTO [dbo].[Room_Reservations]
            ([Room_Id]
            ,[User_Id]
            ,[Passenger_First_Name]

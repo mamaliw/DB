@@ -1,42 +1,42 @@
 const BusStop = require('../Model/BusStop')
 const db = require('../DB')
 
-async function findById(BusStop_Id) {
-    return (await sql.query(`select * from BusStops where BusStop_Id = ${BusStop_Id}`)).recordsets[0][0]
+async function findById(Bus_Stop_Id) {
+    return (await sql.query(`select * from Bus_Stops where Bus_Stop_Id = ${Bus_Stop_Id}`)).recordsets[0][0]
 }
 
-async function findByIds(BusStop_Ids) {
-    return (await sql.query(`select * from BusStops where BusStop_Id in (${BusStop_Ids})`)).recordsets[0]
+async function findByIds(Bus_Stop_Ids) {
+    return (await sql.query(`select * from Bus_Stops where Bus_Stop_Id in (${Bus_Stop_Ids})`)).recordsets[0]
 }
 
 async function findAll() {
-    return (await sql.query(`select * from BusStops`)).recordsets[0]
+    return (await sql.query(`select * from Bus_Stops`)).recordsets[0]
 }
 
-async function deleteById(BusStop_Id) {
-    return (await sql.query(`delete from BusStops where BusStop_Id = ${BusStop_Id}`)).rowsAffected[0] > 0
+async function deleteById(Bus_Stop_Id) {
+    return (await sql.query(`delete from Bus_Stops where Bus_Stop_Id = ${Bus_Stop_Id}`)).rowsAffected[0] > 0
 }
 
-async function deleteByIds(BusStop_Ids) {
-    return (await sql.query(`delete from BusStops where BusStop_Id in (${BusStop_Ids})`)).rowsAffected[0] >= BusStop_Ids.length
+async function deleteByIds(Bus_Stop_Ids) {
+    return (await sql.query(`delete from Bus_Stops where Bus_Stop_Id in (${Bus_Stop_Ids})`)).rowsAffected[0] >= Bus_Stop_Ids.length
 }
 
 async function save(BusStop) {
     if (!BusStop){
         throw new Error('Bad BusStop')
     }
-    let result = (await sql.query(`select * from BusStops where BusStop_Id = ${BusStop.BusStop_Id}`)).recordsets[0].length > 0
+    let result = (await sql.query(`select * from Bus_Stops where Bus_Stop_Id = ${BusStop.Bus_Stop_Id}`)).recordsets[0].length > 0
     if (result) {
-        return (await sql.query(`UPDATE [dbo].[BusStops]
+        return (await sql.query(`UPDATE [dbo].[Bus_Stops]
    SET [Trip_Number] = ${BusStop.Trip_Number}
       ,[Stop_City] = ${BusStop.Stop_City}
- WHERE  BusStop_Id = ${BusStop.BusStop_Id}`))
+ WHERE  Bus_Stop_Id = ${BusStop.Bus_Stop_Id}`))
     }
     return (await sql.query(`
-INSERT INTO [dbo].[BusStops]
+INSERT INTO [dbo].[Bus_Stops]
            ([Trip_Number]
            ,[Stop_City])
-           OUTPUT Inserted.BusStop_Id
+           OUTPUT Inserted.Bus_Stop_Id
      VALUES
            (
             ${BusStop.Trip_Number},

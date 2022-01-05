@@ -1,33 +1,33 @@
 const FlightsReservation = require('../Model/FlightsReservation')
 const db = require('../DB')
 
-async function findById(FlightsReservation_Id) {
-    return (await sql.query(`select * from FlightsReservations where FlightsReservation_Id = ${FlightsReservation_Id}`)).recordsets[0][0]
+async function findById(Flights_Reservation_Id) {
+    return (await sql.query(`select * from Flights_Reservations where Flights_Reservation_Id = ${Flights_Reservation_Id}`)).recordsets[0][0]
 }
 
-async function findByIds(FlightsReservation_Ids) {
-    return (await sql.query(`select * from FlightsReservations where FlightsReservation_Id in (${FlightsReservation_Ids})`)).recordsets[0]
+async function findByIds(Flights_Reservation_Ids) {
+    return (await sql.query(`select * from Flights_Reservations where Flights_Reservation_Id in (${Flights_Reservation_Ids})`)).recordsets[0]
 }
 
 async function findAll() {
-    return (await sql.query(`select * from FlightsReservations`)).recordsets[0]
+    return (await sql.query(`select * from Flights_Reservations`)).recordsets[0]
 }
 
-async function deleteById(FlightsReservation_Id) {
-    return (await sql.query(`delete from FlightsReservations where FlightsReservation_Id = ${FlightsReservation_Id}`)).rowsAffected[0] > 0
+async function deleteById(Flights_Reservation_Id) {
+    return (await sql.query(`delete from Flights_Reservations where Flights_Reservation_Id = ${Flights_Reservation_Id}`)).rowsAffected[0] > 0
 }
 
-async function deleteByIds(FlightsReservation_Ids) {
-    return (await sql.query(`delete from FlightsReservations where FlightsReservation_Id in (${FlightsReservation_Ids})`)).rowsAffected[0] >= FlightsReservation_Ids.length
+async function deleteByIds(Flights_Reservation_Ids) {
+    return (await sql.query(`delete from Flights_Reservations where Flights_Reservation_Id in (${Flights_Reservation_Ids})`)).rowsAffected[0] >= Flights_Reservation_Ids.length
 }
 
 async function save(FlightsReservation) {
     if (!FlightsReservation){
         throw new Error('Bad FlightsReservation')
     }
-    let result = (await sql.query(`select * from FlightsReservations where FlightsReservation_Id = ${FlightsReservation.FlightsReservation_Id}`)).recordsets[0].length > 0
+    let result = (await sql.query(`select * from Flights_Reservations where Flights_Reservation_Id = ${FlightsReservation.Flights_Reservation_Id}`)).recordsets[0].length > 0
     if (result) {
-        return (await sql.query(`UPDATE [dbo].[FlightsReservations]
+        return (await sql.query(`UPDATE [dbo].[Flights_Reservations]
    SET [Reservation_Id] = ${FlightsReservation.Reservation_Id}
       ,[Flight_Number] = ${FlightsReservation.Flight_Number}
       ,[User_Id] = ${FlightsReservation.User_Id}
@@ -41,10 +41,10 @@ async function save(FlightsReservation) {
       ,[Passport_Number] = ${FlightsReservation.Passport_Number}
       ,[Credit_Card_Number] = ${FlightsReservation.Credit_Card_Number}
       ,[Passport_Expire_Date] = '${FlightsReservation.Passport_Expire_Date}'
- WHERE  FlightsReservation_Id = ${FlightsReservation.FlightsReservation_Id}`))
+ WHERE  Flights_Reservation_Id = ${FlightsReservation.Flights_Reservation_Id}`))
     }
     return (await sql.query(`
-INSERT INTO [dbo].[FlightsReservations]
+INSERT INTO [dbo].[Flights_Reservations]
            ([Reservation_Id]
            ,[Flight_Number]
            ,[User_Id]
@@ -58,7 +58,7 @@ INSERT INTO [dbo].[FlightsReservations]
            ,[Passport_Number]
            ,[Credit_Card_Number]
            ,[Passport_Expire_Date])
-           OUTPUT Inserted.FlightsReservation_Id
+           OUTPUT Inserted.Flights_Reservation_Id
      VALUES
            (
             ${FlightsReservation.Reservation_Id},

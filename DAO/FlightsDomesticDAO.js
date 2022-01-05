@@ -1,42 +1,42 @@
 const FlightsDomestic = require('../Model/FlightsDomestic')
 const db = require('../DB')
 
-async function findById(FlightsDomestic_Id) {
-    return (await sql.query(`select * from FlightsDomestics where FlightsDomestic_Id = ${FlightsDomestic_Id}`)).recordsets[0][0]
+async function findById(Flights_Domestic_Id) {
+    return (await sql.query(`select * from Flights_Domestics where Flights_Domestic_Id = ${Flights_Domestic_Id}`)).recordsets[0][0]
 }
 
-async function findByIds(FlightsDomestic_Ids) {
-    return (await sql.query(`select * from FlightsDomestics where FlightsDomestic_Id in (${FlightsDomestic_Ids})`)).recordsets[0]
+async function findByIds(Flights_Domestic_Ids) {
+    return (await sql.query(`select * from Flights_Domestics where Flights_Domestic_Id in (${Flights_Domestic_Ids})`)).recordsets[0]
 }
 
 async function findAll() {
-    return (await sql.query(`select * from FlightsDomestics`)).recordsets[0]
+    return (await sql.query(`select * from Flights_Domestics`)).recordsets[0]
 }
 
-async function deleteById(FlightsDomestic_Id) {
-    return (await sql.query(`delete from FlightsDomestics where FlightsDomestic_Id = ${FlightsDomestic_Id}`)).rowsAffected[0] > 0
+async function deleteById(Flights_Domestic_Id) {
+    return (await sql.query(`delete from Flights_Domestics where Flights_Domestic_Id = ${Flights_Domestic_Id}`)).rowsAffected[0] > 0
 }
 
-async function deleteByIds(FlightsDomestic_Ids) {
-    return (await sql.query(`delete from FlightsDomestics where FlightsDomestic_Id in (${FlightsDomestic_Ids})`)).rowsAffected[0] >= FlightsDomestic_Ids.length
+async function deleteByIds(Flights_Domestic_Ids) {
+    return (await sql.query(`delete from Flights_Domestics where Flights_Domestic_Id in (${Flights_Domestic_Ids})`)).rowsAffected[0] >= Flights_Domestic_Ids.length
 }
 
 async function save(FlightsDomestic) {
     if (!FlightsDomestic){
         throw new Error('Bad FlightsDomestic')
     }
-    let result = (await sql.query(`select * from FlightsDomestics where FlightsDomestic_Id = ${FlightsDomestic.FlightsDomestic_Id}`)).recordsets[0].length > 0
+    let result = (await sql.query(`select * from Flights_Domestics where Flights_Domestic_Id = ${FlightsDomestic.Flights_Domestic_Id}`)).recordsets[0].length > 0
     if (result) {
-        return (await sql.query(`UPDATE [dbo].[FlightsDomestics]
+        return (await sql.query(`UPDATE [dbo].[Flights_Domestics]
    SET [Flight_Number] = ${FlightsDomestic.Flight_Number}
       ,[Company] = ${FlightsDomestic.Company}
- WHERE  FlightsDomestic_Id = ${FlightsDomestic.FlightsDomestic_Id}`))
+ WHERE  Flights_Domestic_Id = ${FlightsDomestic.Flights_Domestic_Id}`))
     }
     return (await sql.query(`
-INSERT INTO [dbo].[FlightsDomestics]
+INSERT INTO [dbo].[Flights_Domestics]
            ([Flight_Number]
            ,[Company])
-           OUTPUT Inserted.FlightsDomestic_Id
+           OUTPUT Inserted.Flights_Domestic_Id
      VALUES
            (
             ${FlightsDomestic.Flight_Number},

@@ -1,46 +1,46 @@
 const FlightsForeignStop = require('../Model/FlightsForeignStop')
 const db = require('../DB')
 
-async function findById(FlightsForeignStop_Id) {
-    return (await sql.query(`select * from FlightsForeignStops where FlightsForeignStop_Id = ${FlightsForeignStop_Id}`)).recordsets[0][0]
+async function findById(Flights_Foreign_Stop_Id) {
+    return (await sql.query(`select * from Flights_Foreign_Stops where Flights_Foreign_Stop_Id = ${Flights_Foreign_Stop_Id}`)).recordsets[0][0]
 }
 
-async function findByIds(FlightsForeignStop_Ids) {
-    return (await sql.query(`select * from FlightsForeignStops where FlightsForeignStop_Id in (${FlightsForeignStop_Ids})`)).recordsets[0]
+async function findByIds(Flights_Foreign_Stop_Ids) {
+    return (await sql.query(`select * from Flights_Foreign_Stops where Flights_Foreign_Stop_Id in (${Flights_Foreign_Stop_Ids})`)).recordsets[0]
 }
 
 async function findAll() {
-    return (await sql.query(`select * from FlightsForeignStops`)).recordsets[0]
+    return (await sql.query(`select * from Flights_Foreign_Stops`)).recordsets[0]
 }
 
-async function deleteById(FlightsForeignStop_Id) {
-    return (await sql.query(`delete from FlightsForeignStops where FlightsForeignStop_Id = ${FlightsForeignStop_Id}`)).rowsAffected[0] > 0
+async function deleteById(Flights_Foreign_Stop_Id) {
+    return (await sql.query(`delete from Flights_Foreign_Stops where Flights_Foreign_Stop_Id = ${Flights_Foreign_Stop_Id}`)).rowsAffected[0] > 0
 }
 
-async function deleteByIds(FlightsForeignStop_Ids) {
-    return (await sql.query(`delete from FlightsForeignStops where FlightsForeignStop_Id in (${FlightsForeignStop_Ids})`)).rowsAffected[0] >= FlightsForeignStop_Ids.length
+async function deleteByIds(Flights_Foreign_Stop_Ids) {
+    return (await sql.query(`delete from Flights_Foreign_Stops where Flights_Foreign_Stop_Id in (${Flights_Foreign_Stop_Ids})`)).rowsAffected[0] >= Flights_Foreign_Stop_Ids.length
 }
 
 async function save(FlightsForeignStop) {
     if (!FlightsForeignStop){
         throw new Error('Bad FlightsForeignStop')
     }
-    let result = (await sql.query(`select * from FlightsForeignStops where FlightsForeignStop_Id = ${FlightsForeignStop.FlightsForeignStop_Id}`)).recordsets[0].length > 0
+    let result = (await sql.query(`select * from Flights_Foreign_Stops where Flights_Foreign_Stop_Id = ${FlightsForeignStop.Flights_Foreign_Stop_Id}`)).recordsets[0].length > 0
     if (result) {
-        return (await sql.query(`UPDATE [dbo].[FlightsForeignStops]
+        return (await sql.query(`UPDATE [dbo].[Flights_Foreign_Stops]
    SET [Flight_Number] = ${FlightsForeignStop.Flight_Number}
       ,[City] = ${FlightsForeignStop.City}
       ,[Terminal] = ${FlightsForeignStop.Terminal}
       ,[Company] = ${FlightsForeignStop.Company}
- WHERE  FlightsForeignStop_Id = ${FlightsForeignStop.FlightsForeignStop_Id}`))
+ WHERE  Flights_Foreign_Stop_Id = ${FlightsForeignStop.Flights_Foreign_Stop_Id}`))
     }
     return (await sql.query(`
-INSERT INTO [dbo].[FlightsForeignStops]
+INSERT INTO [dbo].[Flights_Foreign_Stops]
            ([Flight_Number]
            ,[City]
            ,[Terminal]
            ,[Company])
-           OUTPUT Inserted.FlightsForeignStop_Id
+           OUTPUT Inserted.Flights_Foreign_Stop_Id
      VALUES
            (
             ${FlightsForeignStop.Flight_Number},

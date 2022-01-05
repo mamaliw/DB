@@ -1,46 +1,46 @@
 const RoomOption = require('../Model/RoomOption')
 const db = require('../DB')
 
-async function findById(RoomOption_Id) {
-    return (await sql.query(`select * from RoomOptions where RoomOption_Id = ${RoomOption_Id}`)).recordsets[0][0]
+async function findById(Room_Option_Id) {
+    return (await sql.query(`select * from Room_Options where Room_Option_Id = ${Room_Option_Id}`)).recordsets[0][0]
 }
 
-async function findByIds(RoomOption_Ids) {
-    return (await sql.query(`select * from RoomOptions where RoomOption_Id in (${RoomOption_Ids})`)).recordsets[0]
+async function findByIds(Room_Option_Ids) {
+    return (await sql.query(`select * from Room_Options where Room_Option_Id in (${Room_Option_Ids})`)).recordsets[0]
 }
 
 async function findAll() {
-    return (await sql.query(`select * from RoomOptions`)).recordsets[0]
+    return (await sql.query(`select * from Room_Options`)).recordsets[0]
 }
 
-async function deleteById(RoomOption_Id) {
-    return (await sql.query(`delete from RoomOptions where RoomOption_Id = ${RoomOption_Id}`)).rowsAffected[0] > 0
+async function deleteById(Room_Option_Id) {
+    return (await sql.query(`delete from Room_Options where Room_Option_Id = ${Room_Option_Id}`)).rowsAffected[0] > 0
 }
 
-async function deleteByIds(RoomOption_Ids) {
-    return (await sql.query(`delete from RoomOptions where RoomOption_Id in (${RoomOption_Ids})`)).rowsAffected[0] >= RoomOption_Ids.length
+async function deleteByIds(Room_Option_Ids) {
+    return (await sql.query(`delete from Room_Options where Room_Option_Id in (${Room_Option_Ids})`)).rowsAffected[0] >= Room_Option_Ids.length
 }
 
 async function save(RoomOption) {
     if (!RoomOption){
         throw new Error('Bad RoomOption')
     }
-    let result = (await sql.query(`select * from RoomOptions where RoomOption_Id = ${RoomOption.RoomOption_Id}`)).recordsets[0].length > 0
+    let result = (await sql.query(`select * from Room_Options where Room_Option_Id = ${RoomOption.Room_Option_Id}`)).recordsets[0].length > 0
     if (result) {
-        return (await sql.query(`UPDATE [dbo].[RoomOptions]
+        return (await sql.query(`UPDATE [dbo].[Room_Options]
    SET [Room_Id] = ${RoomOption.Room_Id}
       ,[Has_Vault] = ${RoomOption.Has_Vault}
       ,[Has_Wifi] = ${RoomOption.Has_Wifi}
       ,[Breakfast_Included] = ${RoomOption.Breakfast_Included}
- WHERE  RoomOption_Id = ${RoomOption.RoomOption_Id}`))
+ WHERE  Room_Option_Id = ${RoomOption.Room_Option_Id}`))
     }
     return (await sql.query(`
-INSERT INTO [dbo].[RoomOptions]
+INSERT INTO [dbo].[Room_Options]
            ([Room_Id]
            ,[Has_Vault]
            ,[Has_Wifi]
            ,[Breakfast_Included])
-           OUTPUT Inserted.RoomOption_Id
+           OUTPUT Inserted.Room_Option_Id
      VALUES
            (
             ${RoomOption.Room_Id},
